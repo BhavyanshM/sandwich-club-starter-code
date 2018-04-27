@@ -37,6 +37,13 @@ public class JsonUtils{
                 ingredients.add(ingredientsJSONArray.getString(i));
             }
 
+            if(mainName.equals(""))mainName = "Unknown";
+            if(placeOfOrigin.equals(""))placeOfOrigin = "Unknown";
+            if(description.equals(""))description = "Unknown";
+            if(image.equals(""));
+            if(alsoKnownAs.size()==0)alsoKnownAs.add("Unknown");
+            if(ingredients.size()==0)ingredients.add("Unknown");
+
             Sandwich sandwich = new Sandwich(mainName, alsoKnownAs, placeOfOrigin, description, image, ingredients);
             return sandwich;
         } catch (JSONException e) {

@@ -3,7 +3,9 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -14,6 +16,10 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
+    private TextView mOriginTextView;
+    private TextView mDescriptionTextView;
+    private TextView mIngredientsTextView;
+    private TextView mAlsoKnownAsTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +49,7 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -56,7 +62,27 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
+    private void populateUI(Sandwich sandwich) {
+        mOriginTextView = findViewById(R.id.origin_tv);
+        mDescriptionTextView = findViewById(R.id.description_tv);
+        mIngredientsTextView = findViewById(R.id.ingredients_tv);
+        mAlsoKnownAsTextView = findViewById(R.id.also_known_tv);
 
+        mOriginTextView.setText(sandwich.getPlaceOfOrigin());
+        mDescriptionTextView.setText(sandwich.getDescription());
+
+        String ingredients = "";
+        for(int i = 0; i<sandwich.getIngredients().size(); i++){
+            ingredients += sandwich.getIngredients().get(i);
+            if(i < (sandwich.getIngredients().size()-1))ingredients += ", ";
+        }
+        mIngredientsTextView.setText(ingredients);
+
+        String alsoKnownAss = "";
+        for(int i = 0; i<sandwich.getAlsoKnownAs().size(); i++){
+            alsoKnownAss += sandwich.getAlsoKnownAs().get(i);
+            if(i < (sandwich.getAlsoKnownAs().size()-1))alsoKnownAss += ", ";
+        }
+        mAlsoKnownAsTextView.setText(alsoKnownAss);
     }
 }
